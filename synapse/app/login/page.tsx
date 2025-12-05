@@ -12,10 +12,11 @@ export default function LoginPage() {
 
     const handleLogin = async () => {
         setLoading(true)
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${location.origin}/auth/callback`,
+                redirectTo: `${apiUrl}/auth/callback`,
             },
         })
 
@@ -30,7 +31,7 @@ export default function LoginPage() {
             <div className="w-full max-w-md p-8 space-y-8 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                        Synapse
+                        Common
                     </h1>
                     <p className="mt-2 text-gray-400">
                         Democratizando el conocimiento universitario con inteligencia colectiva.

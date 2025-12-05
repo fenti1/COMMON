@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Synapse",
+  title: "Common",
   description: "Plataforma de apuntes colaborativos con IA",
 };
 
