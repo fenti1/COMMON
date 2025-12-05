@@ -88,12 +88,14 @@ create table public.contributions (
 
 ### 1. Login & Middleware
 
-- [ ] Implementar botón "Sign in with Google" usando Supabase Auth.
+- [X] Implementar botón "Sign in with Google" usando Supabase Auth.
 - [ ] Crear Middleware en Next.js (`middleware.ts`) que intercepte rutas protegidas (`/dashboard`, `/course/*`).
 - [ ] Lógica del Middleware:
   - Si no hay sesión -> `/login`
   - Si hay sesión pero `!profile.is_verified` -> `/onboarding`
   - Si todo ok -> Dejar pasar.
+
+Tenemos que hacer la pagina Sign in
 
 ### 2. Onboarding (Validación UC)
 
