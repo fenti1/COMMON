@@ -1,4 +1,5 @@
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata = {
   title: "COMMON",
@@ -22,15 +23,15 @@ export default function RootLayout({
             </h1>
 
             <nav className="space-y-3">
-              <a className="block text-slate-700 hover:text-academic-blue" href="#">
+              <Link className="block text-slate-700 hover:text-academic-blue" href="/dashboard">
                 Dashboard
-              </a>
-              <a className="block text-slate-700 hover:text-academic-blue" href="#">
+              </Link>
+              <Link className="block text-slate-700 hover:text-academic-blue" href="/courses">
                 Cursos
-              </a>
-              <a className="block text-slate-700 hover:text-academic-blue" href="#">
+              </Link>
+              <Link className="block text-slate-700 hover:text-academic-blue" href="/profile">
                 Perfil
-              </a>
+              </Link>
             </nav>
           </aside>
 
