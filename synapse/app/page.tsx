@@ -58,7 +58,7 @@ export default async function Home() {
           <div className="flex items-center gap-4">
             {profile.role === 'admin' && (
               <Link href="/admin" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
-                Admin Panel
+                Panel de Admin
               </Link>
             )}
             <UserDropdown user={profile} />
@@ -69,14 +69,14 @@ export default async function Home() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold text-white">My Courses</h2>
+          <h2 className="text-2xl font-bold text-white">Mis Cursos</h2>
           <AddCourseModal />
         </div>
 
         {/* Pending Requests */}
         {pendingCourses.length > 0 && (
           <div className="mb-12">
-            <h3 className="text-sm font-semibold text-yellow-500 uppercase tracking-wider mb-4">Pending Approval</h3>
+            <h3 className="text-sm font-semibold text-yellow-500 uppercase tracking-wider mb-4">Pendiente de Aprobación</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {pendingCourses.map((course: any) => (
                 <div key={course.id} className="bg-white/5 rounded-xl border border-yellow-500/30 p-6 opacity-75">
@@ -85,11 +85,11 @@ export default async function Home() {
                       {course.code.substring(0, 3)}
                     </div>
                     <span className="text-xs font-medium text-yellow-400 bg-yellow-500/10 px-2 py-1 rounded-full border border-yellow-500/20">
-                      Pending
+                      Pendiente
                     </span>
                   </div>
                   <h3 className="text-lg font-bold text-white mb-1">{course.name}</h3>
-                  <p className="text-sm text-gray-400">Request sent. Waiting for admin approval.</p>
+                  <p className="text-sm text-gray-400">Solicitud enviada. Esperando aprobación del admin.</p>
                 </div>
               ))}
             </div>
@@ -107,7 +107,7 @@ export default async function Home() {
                       {course.code.substring(0, 3)}
                     </div>
                     <span className="text-xs font-medium text-green-400 bg-green-500/10 px-2 py-1 rounded-full border border-green-500/20">
-                      Active
+                      Activo
                     </span>
                   </div>
 
@@ -115,18 +115,18 @@ export default async function Home() {
                     {course.name}
                   </h3>
                   <p className="text-sm text-gray-400 mb-4 line-clamp-2">
-                    {course.description || 'No description available.'}
+                    {course.description || 'Sin descripción disponible.'}
                   </p>
 
                   <div className="mt-auto pt-4 border-t border-white/5 flex items-center text-xs text-gray-500">
-                    <span>Last update: {new Date(course.last_updated_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                    <span>Última actualización: {new Date(course.last_updated_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                   </div>
                 </div>
               </Link>
             ))
           ) : (
             <div className="col-span-full text-center py-12 bg-white/5 rounded-xl border border-dashed border-white/10 backdrop-blur-sm">
-              <p className="text-gray-400">No courses found. Start by adding one!</p>
+              <p className="text-gray-400">No se encontraron cursos. ¡Comienza añadiendo uno!</p>
             </div>
           )}
         </div>

@@ -199,7 +199,7 @@ export async function submitContribution(formData: FormData) {
     }
 
     if (!noteContent.trim()) {
-        return { success: false, message: 'No content provided.' }
+        return { success: false, message: 'No se proporcionó contenido.' }
     }
 
     // 1. Get current Master Document
@@ -226,7 +226,7 @@ export async function submitContribution(formData: FormData) {
     const result = await analyzeAndMergeNotes(masterDoc.content, noteContent)
 
     if (!result.hasChanges) {
-        return { success: false, message: 'No new information detected in your notes.' }
+        return { success: false, message: 'No se detectó información nueva en tus apuntes.' }
     }
 
     // 3. Update Master Document
@@ -263,5 +263,5 @@ export async function submitContribution(formData: FormData) {
     await supabase.from('profiles').update({ contribution_score: newScore }).eq('id', user.id)
 
     revalidatePath(`/course/${courseId}`)
-    return { success: true, message: 'Contribution accepted! +10 points', summary: result.changeSummary }
+    return { success: true, message: '¡Contribución aceptada! +10 puntos', summary: result.changeSummary }
 }

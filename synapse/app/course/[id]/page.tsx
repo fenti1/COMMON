@@ -7,6 +7,7 @@ import 'katex/dist/katex.min.css'
 import { ArrowLeft, BookOpen, Users, History, Trophy } from 'lucide-react'
 import Link from 'next/link'
 import ContributionModal from '@/components/ContributionModal'
+import DownloadButton from '@/components/DownloadButton'
 
 export default async function CoursePage({ params }: { params: Promise<{ id: string }> }) {
     const supabase = await createClient()
@@ -71,7 +72,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
                 <div className="p-6 border-b border-white/10">
                     <Link href="/" className="flex items-center text-gray-400 hover:text-white transition-colors mb-4 text-sm font-medium group">
                         <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-                        Back to Dashboard
+                        Volver al Panel
                     </Link>
                     <h1 className="text-2xl font-bold text-white tracking-tight bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">{course.code}</h1>
                     <p className="text-sm text-gray-400 mt-1">{course.name}</p>
@@ -82,7 +83,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
                         <div className="mb-8">
                             <h3 className="flex items-center text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">
                                 <Trophy className="w-4 h-4 mr-2 text-yellow-500" />
-                                Top Contributors
+                                Mejores Colaboradores
                             </h3>
                             <div className="space-y-4">
                                 {leaderboard.slice(0, 5).map((contributor, index) => (
@@ -95,12 +96,12 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
                                         </div>
                                         <div>
                                             <p className="text-sm font-medium text-white">{contributor.name}</p>
-                                            <p className="text-xs text-gray-400">{contributor.score} points</p>
+                                            <p className="text-xs text-gray-400">{contributor.score} puntos</p>
                                         </div>
                                     </div>
                                 ))}
                                 {leaderboard.length === 0 && (
-                                    <p className="text-sm text-gray-500 italic">No contributions yet.</p>
+                                    <p className="text-sm text-gray-500 italic">Aún no hay contribuciones.</p>
                                 )}
                             </div>
                         </div>
@@ -108,7 +109,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
                         <div>
                             <h3 className="flex items-center text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">
                                 <History className="w-4 h-4 mr-2 text-blue-500" />
-                                Recent Updates
+                                Actualizaciones Recientes
                             </h3>
                             <div className="space-y-4">
                                 {versions && versions.length > 0 ? versions.map((version: any) => (
@@ -118,14 +119,14 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
                                             {new Date(version.created_at).toLocaleDateString()}
                                         </p>
                                         <p className="text-sm font-medium text-gray-300 line-clamp-2 hover:text-white transition-colors">
-                                            {version.change_summary || 'Content update'}
+                                            {version.change_summary || 'Actualización de contenido'}
                                         </p>
                                         <p className="text-xs text-gray-500 mt-1">
-                                            by <span className="text-blue-400">{version.profiles?.full_name || 'Unknown'}</span>
+                                            por <span className="text-blue-400">{version.profiles?.full_name || 'Desconocido'}</span>
                                         </p>
                                     </div>
                                 )) : (
-                                    <p className="text-sm text-gray-500 italic">No history available.</p>
+                                    <p className="text-sm text-gray-500 italic">No hay historial disponible.</p>
                                 )}
                             </div>
                         </div>
@@ -147,18 +148,21 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
                             <h1 className="text-4xl font-serif font-bold text-white mb-4 tracking-tight">
                                 {course.name}
                             </h1>
-                            <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm mb-6">
-                                <div className="flex items-center">
-                                    <BookOpen className="w-4 h-4 mr-2 text-blue-400" />
-                                    <span>Living Document</span>
+                            <div className="flex justify-between items-end">
+                                <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm">
+                                    <div className="flex items-center">
+                                        <BookOpen className="w-4 h-4 mr-2 text-blue-400" />
+                                        <span>Documento Vivo</span>
+                                    </div>
+                                    <span className="hidden sm:inline text-gray-600">&bull;</span>
+                                    <span>Versión {masterDoc?.version || 1}</span>
+                                    <span className="hidden sm:inline text-gray-600">&bull;</span>
+                                    <span>Última actualización {masterDoc?.last_updated_at ? new Date(masterDoc.last_updated_at).toLocaleDateString() : 'Nunca'}</span>
                                 </div>
-                                <span className="hidden sm:inline text-gray-600">&bull;</span>
-                                <span>Version {masterDoc?.version || 1}</span>
-                                <span className="hidden sm:inline text-gray-600">&bull;</span>
-                                <span>Last updated {masterDoc?.last_updated_at ? new Date(masterDoc.last_updated_at).toLocaleDateString() : 'Never'}</span>
+                                {masterDoc?.content && (
+                                    <DownloadButton content={masterDoc.content} filename={`${course.code}_apuntes`} />
+                                )}
                             </div>
-
-
                         </div>
 
                         {/* Markdown Content */}
@@ -172,8 +176,8 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
                                 </ReactMarkdown>
                             ) : (
                                 <div className="text-center py-20 text-gray-500 italic bg-white/5 rounded-xl border border-dashed border-white/10">
-                                    <p className="mb-2">This document is currently empty.</p>
-                                    <p className="text-sm">Use the "Contribute Notes" button to start building the knowledge base!</p>
+                                    <p className="mb-2">Este documento está vacío actualmente.</p>
+                                    <p className="text-sm">¡Usa el botón "Contribuir Apuntes" para comenzar a construir la base de conocimiento!</p>
                                 </div>
                             )}
                         </article>

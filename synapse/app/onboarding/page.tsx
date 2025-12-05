@@ -20,7 +20,7 @@ export default function OnboardingPage() {
         // Regex validation
         const ucEmailRegex = /^[a-zA-Z0-9._%+-]+@uc\.cl$/
         if (!ucEmailRegex.test(email)) {
-            setError('Please enter a valid @uc.cl email address.')
+            setError('Por favor ingresa un correo @uc.cl válido.')
             setLoading(false)
             return
         }
@@ -42,7 +42,7 @@ export default function OnboardingPage() {
             router.push('/')
             router.refresh()
         } catch (err: any) {
-            setError(err.message || 'An error occurred')
+            setError(err.message || 'Ocurrió un error')
         } finally {
             setLoading(false)
         }
@@ -52,16 +52,16 @@ export default function OnboardingPage() {
         <div className="min-h-screen flex items-center justify-center bg-black text-white">
             <div className="w-full max-w-md p-8 space-y-6 bg-gray-900 rounded-2xl border border-gray-800">
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold text-white">Verify your Identity</h2>
+                    <h2 className="text-2xl font-bold text-white">Verifica tu Identidad</h2>
                     <p className="mt-2 text-gray-400">
-                        To access Synapse, please verify your university email.
+                        Para acceder a Synapse, verifica tu correo universitario.
                     </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-300">
-                            UC Email Address
+                            Correo UC
                         </label>
                         <input
                             type="email"
@@ -86,7 +86,7 @@ export default function OnboardingPage() {
                         disabled={loading}
                         className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
                     >
-                        {loading ? <Loader2 className="animate-spin h-4 w-4" /> : 'Verify Access'}
+                        {loading ? <Loader2 className="animate-spin h-4 w-4" /> : 'Verificar Acceso'}
                     </button>
                 </form>
             </div>

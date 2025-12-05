@@ -6,15 +6,15 @@ export async function analyzeAndMergeNotes(currentContent: string, userNotes: st
   const model = genAI.getGenerativeModel({
     model: 'gemini-2.0-flash',
     generationConfig: {
-      temperature: 0.7,
+      temperature: 0.5, // Lower temperature for more stable formatting
       maxOutputTokens: 8192,
     }
   })
 
   const prompt = `
-    Eres un editor académico experto y un especialista en la materia. Tu tarea es integrar nuevos apuntes de un estudiante en un "Documento Maestro" colaborativo para un curso universitario.
+    Eres un editor académico experto. Tu tarea es integrar nuevos apuntes de un estudiante en un "Documento Maestro" colaborativo.
 
-    **Objetivo:** Crear un documento único, exhaustivo, bien estructurado y explicativo que integre toda la información relevante de ambas fuentes.
+    **Objetivo:** Crear un documento único, exhaustivo y bien estructurado que integre toda la información.
 
     **Entradas:**
     1. **Documento Maestro (Estado Actual):**
@@ -25,47 +25,72 @@ export async function analyzeAndMergeNotes(currentContent: string, userNotes: st
 
     **Instrucciones:**
     1. **Idioma:** Todo el contenido DEBE estar en **ESPAÑOL**.
-    2. **Analizar:** Lee cuidadosamente ambos textos. Identifica la información en los "Apuntes del Estudiante" que sea *nueva*, *relevante* y *correcta*.
-    3. **Reestructurar e Integrar:** NO te limites a pegar la información al final.
-       - **Integra** la nueva información orgánicamente en las secciones correspondientes del Documento Maestro.
-       - **Reescribe** y **expande** las explicaciones existentes si los nuevos apuntes aportan mayor claridad o profundidad.
-       - Si el Documento Maestro está vacío, crea una estructura lógica y académica basada en los apuntes.
-       - Usa un tono **explicativo**, **didáctico** y **académico**.
-    4. **Formato:** Usa Markdown (encabezados, viñetas, negritas, bloques de código) para organizar el contenido de manera clara y legible.
-    5. **Filtrar:** Descarta información redundante, irrelevante o notas personales (ej: "tengo que estudiar esto").
-    6. **Resumir:** Proporciona un resumen breve de una frase sobre los cambios realizados.
+    2. **Integrar:** Fusiona la nueva información en las secciones correspondientes del Documento Maestro.
+    3. **Formato:** Usa Markdown limpio.
+    4. **Filtrar:** Elimina redundancias y notas personales.
 
-    **Formato de Salida:**
-    Devuelve un objeto JSON con la siguiente estructura:
-    {
-      "updatedContent": "El contenido completo en markdown del documento fusionado...",
-      "changeSummary": "Un resumen breve de los cambios...",
-      "hasChanges": true/false (true si añadiste/modificaste algo, false si los apuntes eran redundantes)
-    }
-    
-    IMPORTANTE: Devuelve SOLO el objeto JSON, sin bloques de código markdown alrededor.
+    **Formato de Salida (ESTRICTO):**
+    Debes separar las partes de tu respuesta usando EXACTAMENTE estos separadores:
+
+    <<<<CONTENT_START>>>>
+    (Aquí va el contenido completo del documento en Markdown)
+    <<<<CONTENT_END>>>>
+    <<<<SUMMARY_START>>>>
+    (Aquí va el resumen de cambios en una frase)
+    <<<<SUMMARY_END>>>>
+    <<<<HAS_CHANGES_START>>>>
+    (Escribe "true" si hubo cambios relevantes, o "false" si no)
+    <<<<HAS_CHANGES_END>>>>
   `
 
   const result = await model.generateContent(prompt)
   const response = result.response
   const text = response.text()
 
-  console.log("Gemini Raw Response:", text)
+  console.log("Gemini Raw Response Length:", text.length)
 
   try {
-    // Robust JSON extraction
-    const startIndex = text.indexOf('{')
-    const endIndex = text.lastIndexOf('}')
+    // Helper to extract content between separators
+    const extract = (startTag: string, endTag: string) => {
+      const startIndex = text.indexOf(startTag)
+      const endIndex = text.indexOf(endTag)
 
-    if (startIndex === -1 || endIndex === -1) {
-      throw new Error("No JSON object found in response")
+      if (startIndex === -1 || endIndex === -1) {
+        // Fallback for truncation or formatting errors
+        if (startTag === '<<<<CONTENT_START>>>>' && startIndex !== -1) {
+          // If we have the start of content but no end, return what we have
+          return text.substring(startIndex + startTag.length).trim()
+        }
+        return null
+      }
+      return text.substring(startIndex + startTag.length, endIndex).trim()
     }
 
-    const jsonString = text.substring(startIndex, endIndex + 1)
-    return JSON.parse(jsonString)
+    const updatedContent = extract('<<<<CONTENT_START>>>>', '<<<<CONTENT_END>>>>')
+    const changeSummary = extract('<<<<SUMMARY_START>>>>', '<<<<SUMMARY_END>>>>')
+    const hasChangesStr = extract('<<<<HAS_CHANGES_START>>>>', '<<<<HAS_CHANGES_END>>>>')
+
+    if (!updatedContent) {
+      throw new Error("Failed to extract content from Gemini response")
+    }
+
+    return {
+      updatedContent,
+      changeSummary: changeSummary || "Se actualizó el documento con nueva información.",
+      hasChanges: hasChangesStr === 'true'
+    }
+
   } catch (e) {
     console.error("Error parsing Gemini response:", e)
     console.error("Raw text was:", text)
+    // Fallback: if parsing fails completely, assume the whole text might be the content if it looks like markdown
+    if (text.includes('#')) {
+      return {
+        updatedContent: text,
+        changeSummary: "Actualización automática (error de formato)",
+        hasChanges: true
+      }
+    }
     throw new Error("Failed to process notes with AI")
   }
 }

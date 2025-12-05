@@ -31,7 +31,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
             >
                 <div className="hidden md:flex flex-col items-end">
                     <span className="text-sm font-medium text-white">{user.full_name}</span>
-                    <span className="text-xs text-blue-200">Score: {user.contribution_score} 🌟</span>
+                    <span className="text-xs text-blue-200">Puntaje: {user.contribution_score} 🌟</span>
                 </div>
                 <img
                     src={user.avatar_url || `https://ui-avatars.com/api/?name=${user.full_name}`}
@@ -49,7 +49,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
                     <div className="absolute right-0 mt-2 w-48 bg-gray-900 border border-white/10 rounded-xl shadow-xl z-20 py-1 overflow-hidden backdrop-blur-lg">
                         <div className="px-4 py-2 border-b border-white/10 md:hidden">
                             <p className="text-sm text-white font-medium truncate">{user.full_name}</p>
-                            <p className="text-xs text-blue-200">Score: {user.contribution_score} 🌟</p>
+                            <p className="text-xs text-blue-200">Puntaje: {user.contribution_score} 🌟</p>
                         </div>
                         <button
                             onClick={handleLogout}

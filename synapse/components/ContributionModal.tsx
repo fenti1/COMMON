@@ -43,7 +43,7 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
             }
         } catch (error) {
             console.error(error)
-            setResult({ success: false, message: 'Failed to submit contribution. Please try again.' })
+            setResult({ success: false, message: 'Error al enviar contribución. Por favor intenta de nuevo.' })
         } finally {
             setIsSubmitting(false)
         }
@@ -56,7 +56,7 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                 className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-all"
             >
                 <Upload className="w-4 h-4 mr-2" />
-                Contribute Notes
+                Contribuir Apuntes
             </button>
         )
     }
@@ -66,8 +66,8 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
             <div className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
                 <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
                     <div>
-                        <h2 className="text-xl font-bold text-gray-900">Contribute to Living Notes</h2>
-                        <p className="text-sm text-gray-500">Share your knowledge to improve the master document.</p>
+                        <h2 className="text-xl font-bold text-gray-900">Contribuir a Apuntes Vivos</h2>
+                        <p className="text-sm text-gray-500">Comparte tu conocimiento para mejorar el documento maestro.</p>
                     </div>
                     <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-gray-600">
                         <X className="w-6 h-6" />
@@ -77,11 +77,11 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                 <div className="p-6 flex-1 overflow-y-auto">
                     {result && (
                         <div className={`mb-4 p-4 rounded-lg ${result.success ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
-                            <p className="font-bold">{result.success ? 'Success!' : 'Notice'}</p>
+                            <p className="font-bold">{result.success ? '¡Éxito!' : 'Aviso'}</p>
                             <p>{result.message}</p>
                             {result.summary && (
                                 <div className="mt-2 text-sm bg-white/50 p-2 rounded">
-                                    <strong>AI Summary:</strong> {result.summary}
+                                    <strong>Resumen IA:</strong> {result.summary}
                                 </div>
                             )}
                         </div>
@@ -90,12 +90,12 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                     <div className="space-y-6">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Option 1: Write Notes
+                                Opción 1: Escribir Apuntes
                             </label>
                             <textarea
                                 value={content}
                                 onChange={(e) => setContent(e.target.value)}
-                                placeholder="# My Lecture Notes&#10;&#10;Today we discussed..."
+                                placeholder="# Mis Apuntes de Clase&#10;&#10;Hoy discutimos..."
                                 className="w-full h-48 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm resize-none text-gray-900 placeholder-gray-400"
                                 disabled={!!file}
                             />
@@ -106,13 +106,13 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                                 <div className="w-full border-t border-gray-300" />
                             </div>
                             <div className="relative flex justify-center">
-                                <span className="bg-white px-2 text-sm text-gray-500">OR</span>
+                                <span className="bg-white px-2 text-sm text-gray-500">O</span>
                             </div>
                         </div>
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Option 2: Upload File (PDF, Text, Markdown)
+                                Opción 2: Subir Archivo (PDF, Texto, Markdown)
                             </label>
                             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-400 transition-colors">
                                 <div className="space-y-1 text-center">
@@ -122,18 +122,18 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                                             htmlFor="file-upload"
                                             className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
                                         >
-                                            <span>Upload a file</span>
+                                            <span>Subir un archivo</span>
                                             <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} accept=".pdf,.txt,.md" />
                                         </label>
-                                        <p className="pl-1">or drag and drop</p>
+                                        <p className="pl-1">o arrastrar y soltar</p>
                                     </div>
                                     <p className="text-xs text-gray-500">
-                                        PDF, TXT, MD up to 10MB
+                                        PDF, TXT, MD hasta 10MB
                                     </p>
                                     {file && (
                                         <div className="flex items-center justify-center gap-2 mt-2">
                                             <p className="text-sm font-semibold text-blue-600">
-                                                Selected: {file.name}
+                                                Seleccionado: {file.name}
                                             </p>
                                             <button
                                                 onClick={(e) => {
@@ -145,7 +145,7 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                                                 }}
                                                 className="text-red-500 hover:text-red-700 text-xs underline"
                                             >
-                                                Remove
+                                                Eliminar
                                             </button>
                                         </div>
                                     )}
@@ -156,13 +156,13 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                         <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
                             <h4 className="flex items-center text-sm font-bold text-blue-800 mb-2">
                                 <FileText className="w-4 h-4 mr-2" />
-                                How it works
+                                Cómo funciona
                             </h4>
                             <ul className="text-xs text-blue-700 space-y-1 list-disc list-inside">
-                                <li>Our AI analyzes your notes against the current master document.</li>
-                                <li>Only <strong>new and relevant</strong> information is added.</li>
-                                <li>Redundant content is automatically filtered out.</li>
-                                <li>You earn points for every accepted contribution!</li>
+                                <li>Nuestra IA analiza tus apuntes contra el documento maestro actual.</li>
+                                <li>Solo se añade información <strong>nueva y relevante</strong>.</li>
+                                <li>El contenido redundante se filtra automáticamente.</li>
+                                <li>¡Ganas puntos por cada contribución aceptada!</li>
                             </ul>
                         </div>
                     </div>
@@ -173,7 +173,7 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                         onClick={() => setIsOpen(false)}
                         className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
                     >
-                        Cancel
+                        Cancelar
                     </button>
                     <button
                         onClick={handleSubmit}
@@ -183,10 +183,10 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                         {isSubmitting ? (
                             <>
                                 <Loader2 className="w-4 h-4 animate-spin" />
-                                Analyzing & Merging...
+                                Analizando y Fusionando...
                             </>
                         ) : (
-                            'Submit Contribution'
+                            'Enviar Contribución'
                         )}
                     </button>
                 </div>

@@ -44,7 +44,7 @@ export default function AddCourseModal() {
             router.refresh()
         } catch (error) {
             console.error(error)
-            alert('Failed to enroll')
+            alert('Error al inscribirse')
         } finally {
             setEnrolling(false)
         }
@@ -66,7 +66,7 @@ export default function AddCourseModal() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
             <div className="bg-gray-900 border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
                 <div className="p-4 border-b border-white/10 flex justify-between items-center">
-                    <h2 className="text-lg font-bold text-white">Add Courses</h2>
+                    <h2 className="text-lg font-bold text-white">Añadir Cursos</h2>
                     <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white">
                         <X className="w-5 h-5" />
                     </button>
@@ -77,7 +77,7 @@ export default function AddCourseModal() {
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <input
                             type="text"
-                            placeholder="Search by name or code (e.g. IIC2233)..."
+                            placeholder="Buscar por nombre o sigla (ej. IIC2233)..."
                             className="w-full bg-black/20 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                             onChange={(e) => {
                                 setQuery(e.target.value)
@@ -115,9 +115,9 @@ export default function AddCourseModal() {
                             </div>
                         ))
                     ) : query ? (
-                        <div className="text-center py-8 text-gray-500">No courses found.</div>
+                        <div className="text-center py-8 text-gray-500">No se encontraron cursos.</div>
                     ) : (
-                        <div className="text-center py-8 text-gray-500">Search to find courses.</div>
+                        <div className="text-center py-8 text-gray-500">Busca para encontrar cursos.</div>
                     )}
                 </div>
 
@@ -126,7 +126,7 @@ export default function AddCourseModal() {
                         onClick={() => setIsOpen(false)}
                         className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white"
                     >
-                        Cancel
+                        Cancelar
                     </button>
                     <button
                         onClick={handleEnroll}
@@ -134,7 +134,7 @@ export default function AddCourseModal() {
                         className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                     >
                         {enrolling ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-                        Add {selected.length > 0 ? `(${selected.length})` : ''}
+                        Añadir {selected.length > 0 ? `(${selected.length})` : ''}
                     </button>
                 </div>
             </div>

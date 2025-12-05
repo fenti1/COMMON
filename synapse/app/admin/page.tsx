@@ -46,14 +46,14 @@ export default function AdminPage() {
     }
 
     const handleReject = async (userId: string, courseId: string) => {
-        if (!confirm('Reject this request?')) return
+        if (!confirm('¿Rechazar esta solicitud?')) return
         const { rejectEnrollment } = await import('@/app/actions')
         await rejectEnrollment(userId, courseId)
         fetchEnrollments()
     }
 
     const handleDelete = async (id: string) => {
-        if (!confirm('Are you sure you want to delete this course?')) return
+        if (!confirm('¿Estás seguro de que quieres eliminar este curso?')) return
         await deleteCourse(id)
         fetchCourses()
     }
@@ -62,32 +62,32 @@ export default function AdminPage() {
         <div className="min-h-screen bg-gray-900 text-white p-8">
             <div className="max-w-6xl mx-auto">
                 <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+                    <h1 className="text-3xl font-bold">Panel de Administración</h1>
                     <button
                         onClick={() => setIsCreating(true)}
                         className="px-4 py-2 bg-green-600 rounded-lg flex items-center gap-2 hover:bg-green-700 transition-colors"
                     >
-                        <Plus className="w-4 h-4" /> Add Course
+                        <Plus className="w-4 h-4" /> Añadir Curso
                     </button>
                     <button
                         onClick={() => router.push('/')}
                         className="px-4 py-2 bg-gray-700 rounded-lg flex items-center gap-2 hover:bg-gray-600 transition-colors ml-2"
                     >
-                        Back to Dashboard
+                        Volver al Panel
                     </button>
                 </div>
 
                 {/* Enrollment Requests */}
                 {enrollments.length > 0 && (
                     <div className="mb-12">
-                        <h2 className="text-xl font-bold mb-4 text-yellow-500">Pending Access Requests</h2>
+                        <h2 className="text-xl font-bold mb-4 text-yellow-500">Solicitudes de Acceso Pendientes</h2>
                         <div className="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
                             <table className="w-full text-left">
                                 <thead className="bg-gray-700/50">
                                     <tr>
-                                        <th className="p-4">Student</th>
-                                        <th className="p-4">Course</th>
-                                        <th className="p-4 text-right">Actions</th>
+                                        <th className="p-4">Estudiante</th>
+                                        <th className="p-4">Curso</th>
+                                        <th className="p-4 text-right">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -106,13 +106,13 @@ export default function AdminPage() {
                                                     onClick={() => handleApprove(req.user_id, req.course_id)}
                                                     className="px-3 py-1 bg-green-600/20 text-green-400 border border-green-600/50 rounded hover:bg-green-600/30"
                                                 >
-                                                    Approve
+                                                    Aprobar
                                                 </button>
                                                 <button
                                                     onClick={() => handleReject(req.user_id, req.course_id)}
                                                     className="px-3 py-1 bg-red-600/20 text-red-400 border border-red-600/50 rounded hover:bg-red-600/30"
                                                 >
-                                                    Reject
+                                                    Rechazar
                                                 </button>
                                             </td>
                                         </tr>
@@ -123,24 +123,24 @@ export default function AdminPage() {
                     </div>
                 )}
 
-                <h2 className="text-xl font-bold mb-4">Manage Courses</h2>
+                <h2 className="text-xl font-bold mb-4">Gestionar Cursos</h2>
 
                 {isCreating && (
                     <div className="mb-8 p-6 bg-gray-800 rounded-xl border border-gray-700">
-                        <h2 className="text-xl font-bold mb-4">New Course</h2>
+                        <h2 className="text-xl font-bold mb-4">Nuevo Curso</h2>
                         <form action={async (formData) => {
                             await createCourse(formData)
                             setIsCreating(false)
                             fetchCourses()
                         }} className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <input name="code" placeholder="Code (e.g. IIC2233)" className="bg-gray-900 border border-gray-700 p-2 rounded text-white" required />
-                                <input name="name" placeholder="Course Name" className="bg-gray-900 border border-gray-700 p-2 rounded text-white" required />
+                                <input name="code" placeholder="Sigla (ej. IIC2233)" className="bg-gray-900 border border-gray-700 p-2 rounded text-white" required />
+                                <input name="name" placeholder="Nombre del Curso" className="bg-gray-900 border border-gray-700 p-2 rounded text-white" required />
                             </div>
-                            <textarea name="description" placeholder="Description" className="w-full bg-gray-900 border border-gray-700 p-2 rounded text-white h-24" />
+                            <textarea name="description" placeholder="Descripción" className="w-full bg-gray-900 border border-gray-700 p-2 rounded text-white h-24" />
                             <div className="flex justify-end gap-2">
-                                <button type="button" onClick={() => setIsCreating(false)} className="px-4 py-2 text-gray-400 hover:text-white">Cancel</button>
-                                <button type="submit" className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">Create Course</button>
+                                <button type="button" onClick={() => setIsCreating(false)} className="px-4 py-2 text-gray-400 hover:text-white">Cancelar</button>
+                                <button type="submit" className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">Crear Curso</button>
                             </div>
                         </form>
                     </div>

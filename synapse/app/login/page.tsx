@@ -33,7 +33,7 @@ export default function LoginPage() {
                         Synapse
                     </h1>
                     <p className="mt-2 text-gray-400">
-                        Democratizing university knowledge with collective intelligence.
+                        Democratizando el conocimiento universitario con inteligencia colectiva.
                     </p>
                 </div>
 
@@ -53,11 +53,11 @@ export default function LoginPage() {
                                 />
                             </svg>
                         )}
-                        {loading ? 'Connecting...' : 'Sign in with Google'}
+                        {loading ? 'Conectando...' : 'Iniciar sesión con Google'}
                     </button>
 
                     <p className="text-xs text-center text-gray-500">
-                        By signing in, you agree to share your knowledge with the community.
+                        Al iniciar sesión, aceptas compartir tu conocimiento con la comunidad.
                     </p>
                 </div>
             </div>
