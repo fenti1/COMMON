@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CourseCard } from "@/components/CourseCard";
 
 export default function DashboardPage() {
   // TEMPORAL: Cursos falsos hasta que Supabase esté listo
@@ -31,25 +32,13 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {mockCourses.map((course) => (
-          <Link
+          <CourseCard
             key={course.id}
-            href={`/courses/${course.id}`}
-            className="block group"
-          >
-            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <h2 className="text-xl font-semibold text-slate-800 group-hover:text-academic-blue">
-                {course.code}
-              </h2>
-              <p className="text-slate-600 mt-1">{course.name}</p>
-
-              <div className="mt-4 text-sm text-slate-500">
-                Última actualización:{" "}
-                <span className="font-medium text-slate-700">
-                  {course.last_updated}
-                </span>
-              </div>
-            </div>
-          </Link>
+            id={course.id}
+            code={course.code}
+            name={course.name}
+            last_updated={course.last_updated}
+            />
         ))}
       </div>
     </div>
