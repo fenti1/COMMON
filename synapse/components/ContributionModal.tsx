@@ -63,24 +63,24 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-                <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+            <div className="bg-gray-900 border border-white/10 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+                <div className="p-6 border-b border-white/10 flex justify-between items-center bg-black/20">
                     <div>
-                        <h2 className="text-xl font-bold text-gray-900">Contribuir a Apuntes Vivos</h2>
-                        <p className="text-sm text-gray-500">Comparte tu conocimiento para mejorar el documento maestro.</p>
+                        <h2 className="text-xl font-bold text-white">Contribuir a Apuntes Vivos</h2>
+                        <p className="text-sm text-gray-400">Comparte tu conocimiento para mejorar el documento maestro.</p>
                     </div>
-                    <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-gray-600">
+                    <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white transition-colors">
                         <X className="w-6 h-6" />
                     </button>
                 </div>
 
                 <div className="p-6 flex-1 overflow-y-auto">
                     {result && (
-                        <div className={`mb-4 p-4 rounded-lg ${result.success ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+                        <div className={`mb-4 p-4 rounded-lg border ${result.success ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'}`}>
                             <p className="font-bold">{result.success ? '¡Éxito!' : 'Aviso'}</p>
                             <p>{result.message}</p>
                             {result.summary && (
-                                <div className="mt-2 text-sm bg-white/50 p-2 rounded">
+                                <div className="mt-2 text-sm bg-black/20 p-2 rounded border border-white/5">
                                     <strong>Resumen IA:</strong> {result.summary}
                                 </div>
                             )}
@@ -89,38 +89,38 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
 
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
                                 Opción 1: Escribir Apuntes
                             </label>
                             <textarea
                                 value={content}
                                 onChange={(e) => setContent(e.target.value)}
                                 placeholder="# Mis Apuntes de Clase&#10;&#10;Hoy discutimos..."
-                                className="w-full h-48 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm resize-none text-gray-900 placeholder-gray-400"
+                                className="w-full h-48 p-4 bg-black/20 border border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm resize-none text-white placeholder-gray-500"
                                 disabled={!!file}
                             />
                         </div>
 
                         <div className="relative">
                             <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                                <div className="w-full border-t border-gray-300" />
+                                <div className="w-full border-t border-white/10" />
                             </div>
                             <div className="relative flex justify-center">
-                                <span className="bg-white px-2 text-sm text-gray-500">O</span>
+                                <span className="bg-gray-900 px-2 text-sm text-gray-500">O</span>
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
                                 Opción 2: Subir Archivo (PDF, Texto, Markdown)
                             </label>
-                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-400 transition-colors">
+                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-white/10 border-dashed rounded-lg hover:border-blue-500/50 hover:bg-white/5 transition-all group">
                                 <div className="space-y-1 text-center">
-                                    <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                                    <div className="flex text-sm text-gray-600">
+                                    <Upload className="mx-auto h-12 w-12 text-gray-500 group-hover:text-blue-400 transition-colors" />
+                                    <div className="flex text-sm text-gray-400">
                                         <label
                                             htmlFor="file-upload"
-                                            className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
+                                            className="relative cursor-pointer rounded-md font-medium text-blue-400 hover:text-blue-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
                                         >
                                             <span>Subir un archivo</span>
                                             <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} accept=".pdf,.txt,.md" />
@@ -153,12 +153,12 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                             </div>
                         </div>
 
-                        <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                            <h4 className="flex items-center text-sm font-bold text-blue-800 mb-2">
+                        <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                            <h4 className="flex items-center text-sm font-bold text-blue-400 mb-2">
                                 <FileText className="w-4 h-4 mr-2" />
                                 Cómo funciona
                             </h4>
-                            <ul className="text-xs text-blue-700 space-y-1 list-disc list-inside">
+                            <ul className="text-xs text-blue-300 space-y-1 list-disc list-inside">
                                 <li>Nuestra IA analiza tus apuntes contra el documento maestro actual.</li>
                                 <li>Solo se añade información <strong>nueva y relevante</strong>.</li>
                                 <li>El contenido redundante se filtra automáticamente.</li>
@@ -168,10 +168,10 @@ export default function ContributionModal({ courseId }: { courseId: string }) {
                     </div>
                 </div>
 
-                <div className="p-6 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+                <div className="p-6 border-t border-white/10 bg-black/20 flex justify-end gap-3">
                     <button
                         onClick={() => setIsOpen(false)}
-                        className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900"
+                        className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors"
                     >
                         Cancelar
                     </button>
