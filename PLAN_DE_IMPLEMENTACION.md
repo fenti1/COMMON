@@ -9,6 +9,7 @@ Este documento detalla la hoja de ruta técnica para construir **Synapse** duran
 ## 🛠 Fase 0: Configuración del Entorno (Inmediato)
 
 ### 1. Inicialización del Proyecto
+
 - [ ] Crear proyecto Next.js con App Router y Tailwind CSS.
   ```bash
   npx create-next-app@latest synapse --typescript --tailwind --eslint
@@ -19,9 +20,10 @@ Este documento detalla la hoja de ruta técnica para construir **Synapse** duran
   ```
 
 ### 2. Configuración de Supabase
-- [ ] Crear proyecto en Supabase.
-- [ ] Configurar tablas en SQL Editor (ver sección Schema).
-- [ ] Habilitar Google Auth en Authentication > Providers.
+
+- [X] Crear proyecto en Supabase.
+- [X] Configurar tablas en SQL Editor (ver sección Schema).
+- [X] Habilitar Google Auth en Authentication > Providers.
 - [ ] **IMPORTANTE:** Guardar credenciales en `.env.local` (No subir al repo).
   - `NEXT_PUBLIC_SUPABASE_URL`
   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -34,6 +36,7 @@ Este documento detalla la hoja de ruta técnica para construir **Synapse** duran
 ## 🗄 Fase 1: Arquitectura de Datos (Supabase)
 
 ### Schema Propuesto
+
 Ejecutar este script SQL en Supabase para levantar la estructura rápidamente:
 
 ```sql
@@ -84,6 +87,7 @@ create table public.contributions (
 ## 🔐 Fase 2: Autenticación y "Portería Digital"
 
 ### 1. Login & Middleware
+
 - [ ] Implementar botón "Sign in with Google" usando Supabase Auth.
 - [ ] Crear Middleware en Next.js (`middleware.ts`) que intercepte rutas protegidas (`/dashboard`, `/course/*`).
 - [ ] Lógica del Middleware:
@@ -92,6 +96,7 @@ create table public.contributions (
   - Si todo ok -> Dejar pasar.
 
 ### 2. Onboarding (Validación UC)
+
 - [ ] Crear página `/onboarding`.
 - [ ] Formulario que pide correo `@uc.cl`.
 - [ ] Validación Regex: `^[a-zA-Z0-9._%+-]+@uc\.cl$`.
@@ -102,17 +107,20 @@ create table public.contributions (
 ## 💻 Fase 3: Frontend Core (UI/UX)
 
 ### 1. Dashboard (Home)
+
 - [ ] **Header:** Logo Synapse + Avatar Usuario + Score.
 - [ ] **Grid de Cursos:** Tarjetas con efecto hover (Glassmorphism).
 - [ ] **Estado:** Mostrar "Última actualización" en tiempo real.
 
 ### 2. Vista de "Cuaderno Vivo" (`/course/[id]`)
+
 - [ ] **Layout:** Sidebar izquierda (Herramientas) + Centro (Documento).
 - [ ] **Componente Markdown:** Renderizar el `master_document.content` usando `react-markdown`.
   - Configurar estilos CSS para que parezca un "Paper" académico (fuente Serif, márgenes amplios).
   - Soporte para fórmulas matemáticas (`rehype-katex`).
 
 ### 3. Sidebar de Herramientas
+
 - [ ] **Ranking:** Mostrar Top 3 contribuidores del curso.
 - [ ] **Botón "Aportar":** Abre el Modal de Ingesta.
 
@@ -123,6 +131,7 @@ create table public.contributions (
 Esta es la parte crítica para ganar el premio de innovación.
 
 ### 1. API Route: `/api/contribute`
+
 - [ ] Recibe: `text` (o archivo) + `course_id`.
 - [ ] **Paso 1 - Validación (Gemini):**
   - Prompt: "Evalúa si este texto es relevante para el curso X. Responde JSON { valid: boolean, reason: string }".
@@ -135,6 +144,7 @@ Esta es la parte crítica para ganar el premio de innovación.
   - Sumar puntos al usuario en `profiles`.
 
 ### 2. Funcionalidad "Smart Selection"
+
 - [ ] Frontend: Detectar selección de texto -> Mostrar tooltip flotante.
 - [ ] API Route: `/api/refine`.
 - [ ] Prompt: "Reescribe este fragmento para que sea más [simple/técnico/resumido]".
@@ -152,10 +162,10 @@ Esta es la parte crítica para ganar el premio de innovación.
 
 ### ⏱ Cronograma Sugerido
 
-| Hora | Objetivo |
-|------|----------|
-| 12:00 - 13:00 | Setup Proyecto, BD y Auth (Fases 0 y 1) |
-| 13:00 - 14:30 | Frontend: Dashboard y Vista de Documento (Fase 2) |
+| Hora          | Objetivo                                                      |
+| ------------- | ------------------------------------------------------------- |
+| 12:00 - 13:00 | Setup Proyecto, BD y Auth (Fases 0 y 1)                       |
+| 13:00 - 14:30 | Frontend: Dashboard y Vista de Documento (Fase 2)             |
 | 14:30 - 16:00 | Backend AI: Integración Gemini y Lógica de Fusión (Fase 3) |
-| 16:00 - 16:30 | Pulido Visual y Gamificación |
-| 16:30 - 17:00 | Preparar Pitch y Demo |
+| 16:00 - 16:30 | Pulido Visual y Gamificación                                 |
+| 16:30 - 17:00 | Preparar Pitch y Demo                                         |
